@@ -1,6 +1,9 @@
-import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { App } from './app/app';
+import { createApplication } from '@angular/platform-browser';
+import { createCustomElement } from '@angular/elements';
+import { Widget } from './app/widget/widget';
 
-bootstrapApplication(App, appConfig)
-  .catch((err) => console.error(err));
+(async () => {
+  const appRef = await createApplication();
+  const widgetElement = createCustomElement(Widget, { injector: appRef.injector });
+  customElements.define('app-widget', widgetElement);
+})();

@@ -2,12 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>PocAppFromHtml</title>
+  <title>Host Page with Angular Widget</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    /* Host page styles — these must NOT leak into the widget */
+    body {
+      font-family: Georgia, serif;
+      background: #fefce8;
+      color: #92400e;
+      padding: 2rem;
+    }
+    h1 { color: #b91c1c; }
+    p { font-size: 1.1rem; }
+  </style>
 </head>
 <body>
-  <app-root></app-root>
+  <h1>This is the host HTML page</h1>
+  <p>Everything below is a self-contained Angular Web Component. The host styles do not leak in.</p>
+
+  <!-- Angular custom element -->
+  <app-widget></app-widget>
+
+  <p>Content below the widget is still plain HTML.</p>
 </body>
 </html>

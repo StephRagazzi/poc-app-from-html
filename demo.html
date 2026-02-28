@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Demo: Angular Widget in a plain HTML page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* Host page styles — will NOT leak into the widget thanks to ShadowDom */
+    body {
+      font-family: Georgia, serif;
+      background: #fefce8;
+      color: #92400e;
+      padding: 2rem;
+    }
+    h1 { color: #b91c1c; }
+    p { font-size: 1.1rem; }
+  </style>
+</head>
+<body>
+  <h1>Plain HTML host page</h1>
+  <p>The widget below is an Angular 21 custom element loaded via a single <code>&lt;script&gt;</code> tag.</p>
+
+  <!-- Drop the Angular custom element anywhere -->
+  <app-widget></app-widget>
+
+  <p>Content after the widget is still regular HTML.</p>
+
+  <!-- Single script bundle — this is all you need -->
+  <script src="dist/widget.js"></script>
+</body>
+</html>
