@@ -62,6 +62,23 @@
       line-height: 1;
     }
     .modal-close:hover { color: #1e293b; }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: grab;
+      user-select: none;
+      margin: -2rem -2rem 1rem -2rem;
+      padding: 0.75rem 1rem;
+      background: #f1f5f9;
+      border-radius: 0.75rem 0.75rem 0 0;
+    }
+    .modal-header:active { cursor: grabbing; }
+    .modal-header h3 {
+      margin: 0;
+      font-size: 1rem;
+      color: #334155;
+    }
   </style>
 </head>
 <body>
@@ -74,12 +91,43 @@
 
   <div id="widget-modal" class="modal-backdrop" onclick="if(event.target===this)this.classList.remove('open')">
     <div class="modal-content" role="dialog" aria-modal="true" aria-label="Angular Widget">
-      <button class="modal-close" aria-label="Close widget" onclick="document.getElementById('widget-modal').classList.remove('open')">&times;</button>
+      <div class="modal-header" id="modal-drag-handle">
+        <h3>Widget</h3>
+        <button class="modal-close" aria-label="Close widget" onclick="document.getElementById('widget-modal').classList.remove('open')">&times;</button>
+      </div>
       <app-widget></app-widget>
     </div>
   </div>
 
   <p>Content after the widget is still regular HTML.</p>
+
+  <script>
+    (function () {
+      const handle = document.getElementById('modal-drag-handle');
+      const modal = handle.closest('.modal-content');
+      let isDragging = false, startX, startY, origLeft, origTop;
+
+      handle.addEventListener('pointerdown', function (e) {
+        if (e.target.closest('.modal-close')) return;
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        origLeft = modal.offsetLeft;
+        origTop = modal.offsetTop;
+        handle.setPointerCapture(e.pointerId);
+      });
+
+      handle.addEventListener('pointermove', function (e) {
+        if (!isDragging) return;
+        modal.style.left = (origLeft + e.clientX - startX) + 'px';
+        modal.style.top = (origTop + e.clientY - startY) + 'px';
+      });
+
+      handle.addEventListener('pointerup', function () {
+        isDragging = false;
+      });
+    })();
+  </script>
 
   <!-- Single script bundle — this is all you need -->
   <script src="dist/widget.js"></script>
